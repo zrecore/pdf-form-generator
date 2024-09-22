@@ -1,3 +1,4 @@
+dist: jammy
 language: node_js
 before_install:
   - npm i -g pnpm
