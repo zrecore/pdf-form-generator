@@ -3,7 +3,7 @@ language: node_js
 before_install:
   - npm i -g pnpm
 node_js:
-  - 22
+  - 20
 cache: npm
 env:
   - NODE_ENV=production
