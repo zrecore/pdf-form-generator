@@ -9,8 +9,8 @@ cache:
 env:
   - NODE_ENV=production
 before_install:
-  - corepack enable
-  - corepack prepare pnpm@latest-9 --activate
-  - pnpm config set store-dir ~/.pnpm-store
+  - npm i -g pnpm
 install:
   - pnpm install
+script:
+  - pnpm test
