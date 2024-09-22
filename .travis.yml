@@ -13,4 +13,4 @@ before_install:
 install:
   - pnpm install
 script:
-  - pnpm test
+  - ./node_modules/.bin/pnpm test
