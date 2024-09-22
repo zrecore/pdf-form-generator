@@ -6,8 +6,15 @@ services:
     volumes:
       - nodemods:/app/node_modules
       - ./src:/app/src
-      - ./test:/app/test
+      - ./__test__:/app/__test__
+      - ./.eslintrc.json:/app/.eslintrc
+      - ./jest.config.ts:/app/jest.config.ts
+      - ./next.config.mjs:/app/next.config.mjs
       - ./package.json:/app/package.json
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+      - ./postcss.config.mjs:/app/postcss.config.mjs
+      - ./tailwind.config.ts:/app/tailwind.config.js
+      - ./tsconfig.json:/app/tsconfig.json
     ports:
       - "3000:3000"
     entrypoint: ["pnpm", "dev"]
