@@ -3,7 +3,7 @@ language: node_js
 node_js:
   - 20
 cache:
-  npm: true
+  npm: false
   directories:
     - "~/.pnpm-store"
 env:
@@ -12,5 +12,6 @@ before_install:
   - npm i -g pnpm
 install:
   - pnpm install
+  - pnpm bin
 script:
-  - ./node_modules/.bin/pnpm test
+  - ~/.pnbpm-store/.bin/pnpm test
