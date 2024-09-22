@@ -4,7 +4,8 @@ before_install:
   - npm i -g pnpm
 node_js:
   - 20
-cache: npm
+cache:
+  npm: false
 env:
   - NODE_ENV=production
 install:
