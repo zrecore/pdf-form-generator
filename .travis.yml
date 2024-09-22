@@ -13,6 +13,7 @@ before_install:
   - npm i -g pnpm
 install:
   - pnpm install
+  - ls -la ~/.pnpm-store
+  - ls -la ~/node_modules
 script:
-  - cd ~/
   - pnpm test
