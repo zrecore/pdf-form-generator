@@ -3,9 +3,10 @@ language: node_js
 node_js:
   - 20
 cache:
-  npm: false
+  npm: true
   directories:
     - "~/.pnpm-store"
+    - "~/node_modules"
 env:
   - NODE_ENV=production
   - PATH=$PATH:~/node_modules/.bin/
