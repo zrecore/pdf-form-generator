@@ -9,7 +9,6 @@ services:
       - ./test:/app/test
       - ./package.json:/app/package.json
     ports:
-      - "8080:8080"
       - "3000:3000"
     entrypoint: ["pnpm", "dev"]
 volumes:
