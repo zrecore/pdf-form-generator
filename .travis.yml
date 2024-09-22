@@ -13,6 +13,6 @@ before_install:
   - npm i -g pnpm
 install:
   - pnpm install
-  - pnpm bin
 script:
-  - cd ~/ && pnpm test
+  - cd ~/
+  - pnpm test
