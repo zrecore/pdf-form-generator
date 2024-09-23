@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #c0c0c0;
   --foreground: #171717;
 }
 
@@ -24,4 +24,12 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+
+.paper-legal
+{
+  width:  8.5in;
+  height: 11in;
+  background: white;
 }
