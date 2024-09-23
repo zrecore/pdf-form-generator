@@ -9,12 +9,10 @@ cache:
     - "~/node_modules"
 env:
   - NODE_ENV=production
-  - PATH=$PATH:~/node_modules/.bin/
+  - PATH=$PATH:~/node_modules/.bin/:~/.pnpm-store
 before_install:
   - npm i -g pnpm
 install:
   - pnpm install
-  - ls -la ~/.pnpm-store
-  - ls -la ~/node_modules
 script:
   - pnpm test
