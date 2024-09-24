@@ -1,3 +1,4 @@
+"use client"
 
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
@@ -12,9 +13,9 @@ describe(
       () => {    
         render(<Page />)
 
-        const dom = screen.getByText('PDF Form Generator')
+        const dom = screen.getByText('List')
         expect(dom)
-        .toHaveTextContent('PDF Form Generator')
+        .toHaveTextContent('List')
       }
     )
   }
