@@ -3,9 +3,10 @@
 import Image from "next/image";
 import AddButton from "./components/addButton";
 import RemoveButton from "./components/removeButton";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import PhotoButton from "./components/photoButton";
 import PrintButton from "./components/printButton";
+import EditableInput from "./components/editableInput";
 
 
 export default function Home() {
@@ -37,6 +38,11 @@ export default function Home() {
     setTasks([tasks])
   }
 
+  function handleHeaderChange(newValue:string)
+  {
+    console.log("Header text is:", newValue)
+  }
+
   function handleTotalColumnsUpdate(newValue:number)
   {
     setTotalColumns(newValue)
@@ -52,7 +58,7 @@ export default function Home() {
           <PrintButton />
         </div>
         <div className="paper-legal border border-solid border-gray-200 border-1 drop-shadow-lg px-[0.5in] py-[0.5in] flex flex-col">
-          <div className="editable-header border-dashed border-2 border-cyan-500 rounded-md row-span-1 p-2">{headerText}</div>
+          <div className="editable-header border-dashed border-2 border-cyan-500 rounded-md row-span-1 p-2 text-lg"><EditableInput value={headerText} onChange={handleHeaderChange}></EditableInput></div>
           <div className="grid grid-flow-col justify-items-stretch my-4 h-full">
             <div className="border-dashed border-2 border-cyan-500 rounded-md mr-2 p-2">
               <div>

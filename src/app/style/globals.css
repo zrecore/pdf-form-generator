@@ -33,3 +33,13 @@ body {
   height: 11in;
   background: white;
 }
+
+.editable-input
+{
+  border: solid 2px #404040;
+  background-color: #909090;
+}
+.static-input
+{
+  cursor: text
+}
