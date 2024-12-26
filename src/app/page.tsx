@@ -3,22 +3,31 @@
 import Image from "next/image";
 import AddButton from "./components/addButton";
 import RemoveButton from "./components/removeButton";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import PhotoButton from "./components/photoButton";
 import PrintButton from "./components/printButton";
 import EditableInput from "./components/editableInput";
+import { revalidate } from "./actions/serverActions";
 
 
 export default function Home() {
   
   interface Task
   {
-
+    id:number,
+    title:string,
+    description:string,
+    isComplete:boolean,
+    createdAt:string,
+    updatedAt:string
   }
 
   interface NewTask
   {
-
+    id:number,
+    title:string,
+    description:string,
+    isComplete:boolean
   }
 
   const savedTasks:(Task|NewTask)[] = loadTasks()
@@ -26,21 +35,58 @@ export default function Home() {
   const [headerText, setHeaderText] = useState("Default Heading Text")
   const [totalColumns, setTotalColumns] = useState(3)
 
+  const [tempId, setTempId] = useState(1)
+
   function loadTasks()
   {
     return []
   }
 
-  function updateTask(task:Task|NewTask)
+  function addNewTask()
   {
-    console.log('Update task', task)
-    // TODO: find the task and update it.
-    setTasks([tasks])
+    console.log("ADD NEW TASK")
+    const newTask: NewTask = {
+      id: tempId,
+      title: "(New Task)",
+      description: "(Description)",
+      isComplete: false
+    }
+    tasks.push(newTask)
+    setTasks(tasks)
+    setTempId(tempId + 1)
+    console.log(tasks)
+
+    revalidate("/")
+  }
+
+  function removeTask(id:number)
+  {
+    console.log("REMOVE TASK")
+    
+    setTasks(
+      tasks.filter((t:Task|NewTask) => {
+        return t.id != id
+      })
+    )
+    revalidate("/")
   }
 
   function handleHeaderChange(newValue:string)
   {
     console.log("Header text is:", newValue)
+    setHeaderText(newValue)
+  }
+
+  function handleTaskTitleChange(taskId:number, newValue:string)
+  {
+    console.log("Task Ttle for ID", taskId, " is:", newValue)
+    setTasks(tasks.map((t) => {
+      if (t.id == taskId)
+      {
+        t.title = newValue
+      }
+      return t
+    }))
   }
 
   function handleTotalColumnsUpdate(newValue:number)
@@ -62,7 +108,14 @@ export default function Home() {
           <div className="grid grid-flow-col justify-items-stretch my-4 h-full">
             <div className="border-dashed border-2 border-cyan-500 rounded-md mr-2 p-2">
               <div>
-                <AddButton /><RemoveButton />
+                  {tasks.map((task:Task|NewTask) => {
+
+                    return <div key={task.id} className="flex flex-row">
+                      <EditableInput className="font-semibold text-xl" value={ task.title } onChange={(newValue:string) => {handleTaskTitleChange(task.id, newValue)}}></EditableInput>
+                      <RemoveButton onClick={() => { removeTask(task.id) }}/>
+                    </div>
+                  })}
+                <AddButton onClick={addNewTask} />
               </div>
             </div>
             <div className="border-dashed border-2 border-cyan-500 rounded-md mx-2 p-2">2</div>

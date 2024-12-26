@@ -1,11 +1,18 @@
 "use client"
 import { PlusIcon } from "@heroicons/react/16/solid";
 
-export default function AddButton()
+interface AddButtonProps
+{
+    onClick: Function
+}
+
+export default function AddButton(props:AddButtonProps)
 {
     function handlePlusClick() {
-        console.log("PLUS CLICKED!")  
+        console.log("PLUS CLICKED!")
+        props.onClick()
     }
+
     return (
         <button data-testid="add-button" onClick={ev => handlePlusClick()} className="rounded-md p-2 bg-cyan-500 hover:bg-cyan-400 drop-shadow-md">
             <PlusIcon className="size-6 text-white" />

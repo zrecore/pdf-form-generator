@@ -1,6 +1,9 @@
 "use client"
-import { EventHandler, FC, ReactElement, useState } from "react"
+import { FC, useState } from "react"
 
+type EditableInputChangeFunction = {
+    (newValue:string): void
+}
 interface EditableInputProps
 {
     className?: string,
@@ -11,7 +14,7 @@ interface EditableInputProps
     isDirty?:boolean,
     isEditable?:boolean,
 
-    onChange:EventHandler<any>
+    onChange:EditableInputChangeFunction
 }
 const EditableInput:FC<EditableInputProps> = (props) =>
 {
@@ -19,18 +22,18 @@ const EditableInput:FC<EditableInputProps> = (props) =>
     const [inputIsEditable, setInputIsEditable] = useState(props.isEditable ?? false)
     const inputClassName = props.className ?? false
 
-    function handleOnInputBlur()
+    function handleOnInputBlur() : void
     {
         setInputIsEditable(false);
     }
 
-    function handleOnInputChange(newValue:string)
+    function handleOnInputChange(newValue:string) : void
     {
         setInputValue(newValue)
         props.onChange(newValue)
     }
 
-    function handleOnDoubleClick()
+    function handleOnDoubleClick() : void
     {
         console.log("Double click")
         setInputIsEditable(true)

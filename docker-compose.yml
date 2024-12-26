@@ -17,6 +17,17 @@ services:
       - ./tsconfig.json:/app/tsconfig.json
     ports:
       - "3000:3000"
+    depends_on:
+      - db
     entrypoint: ["pnpm", "dev"]
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
 volumes:
   nodemods:
+  postgres:
