@@ -8,34 +8,16 @@ import PhotoButton from "./components/photoButton";
 import PrintButton from "./components/printButton";
 import EditableInput from "./components/editableInput";
 import { revalidate } from "./actions/serverActions";
+import { NewTask, Task } from "./interfaces/task";
 
 
 export default function Home() {
-  
-  interface Task
-  {
-    id:number,
-    title:string,
-    description:string,
-    isComplete:boolean,
-    createdAt:string,
-    updatedAt:string
-  }
 
-  interface NewTask
-  {
-    id:number,
-    title:string,
-    description:string,
-    isComplete:boolean
-  }
-
-  const savedTasks:(Task|NewTask)[] = loadTasks()
-  const [tasks, setTasks] = useState(savedTasks)
-  const [headerText, setHeaderText] = useState("Default Heading Text")
+  const savedTasks:(Task|NewTask)[]     = loadTasks()
+  const [tasks, setTasks]               = useState(savedTasks)
+  const [headerText, setHeaderText]     = useState("Default Heading Text")
   const [totalColumns, setTotalColumns] = useState(3)
-
-  const [tempId, setTempId] = useState(1)
+  const [tempId, setTempId]             = useState(1)
 
   function loadTasks()
   {
@@ -44,25 +26,23 @@ export default function Home() {
 
   function addNewTask()
   {
-    console.log("ADD NEW TASK")
+    if (tasks.length > 24) return
+
     const newTask: NewTask = {
       id: tempId,
-      title: "(New Task)",
-      description: "(Description)",
+      title: "New Task",
+      description: "Task Description",
       isComplete: false
     }
     tasks.push(newTask)
     setTasks(tasks)
     setTempId(tempId + 1)
-    console.log(tasks)
 
     revalidate("/")
   }
 
   function removeTask(id:number)
   {
-    console.log("REMOVE TASK")
-    
     setTasks(
       tasks.filter((t:Task|NewTask) => {
         return t.id != id
@@ -73,13 +53,11 @@ export default function Home() {
 
   function handleHeaderChange(newValue:string)
   {
-    console.log("Header text is:", newValue)
     setHeaderText(newValue)
   }
 
   function handleTaskTitleChange(taskId:number, newValue:string)
   {
-    console.log("Task Ttle for ID", taskId, " is:", newValue)
     setTasks(tasks.map((t) => {
       if (t.id == taskId)
       {
@@ -111,6 +89,7 @@ export default function Home() {
                   {tasks.map((task:Task|NewTask) => {
 
                     return <div key={task.id} className="flex flex-row">
+                      <div>{ task.id }</div>
                       <EditableInput className="font-semibold text-xl" value={ task.title } onChange={(newValue:string) => {handleTaskTitleChange(task.id, newValue)}}></EditableInput>
                       <RemoveButton onClick={() => { removeTask(task.id) }}/>
                     </div>
