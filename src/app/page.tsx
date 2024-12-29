@@ -9,6 +9,7 @@ import PrintButton from "./components/printButton";
 import EditableInput from "./components/editableInput";
 import { revalidate } from "./actions/serverActions";
 import { NewTask, Task } from "./interfaces/task";
+import TaskList from "./components/taskList";
 
 
 export default function Home() {
@@ -19,6 +20,8 @@ export default function Home() {
   const [totalColumns, setTotalColumns] = useState(3)
   const [tempId, setTempId]             = useState(1)
 
+  const maxTasksPerCols = 20
+
   function loadTasks()
   {
     return []
@@ -26,7 +29,7 @@ export default function Home() {
 
   function addNewTask()
   {
-    if (tasks.length > 24) return
+    if (tasks.length >= maxTasksPerCols * 3) return
 
     const newTask: NewTask = {
       id: tempId,
@@ -54,17 +57,19 @@ export default function Home() {
   function handleHeaderChange(newValue:string)
   {
     setHeaderText(newValue)
+    revalidate("/")
   }
 
-  function handleTaskTitleChange(taskId:number, newValue:string)
+  function handleTaskChange(updatedTask:Task)
   {
     setTasks(tasks.map((t) => {
-      if (t.id == taskId)
+      if (t.id == updatedTask.id)
       {
-        t.title = newValue
+        t = updatedTask
       }
       return t
     }))
+    revalidate("/")
   }
 
   function handleTotalColumnsUpdate(newValue:number)
@@ -81,24 +86,42 @@ export default function Home() {
           <PhotoButton />
           <PrintButton />
         </div>
-        <div className="paper-legal border border-solid border-gray-200 border-1 drop-shadow-lg px-[0.5in] py-[0.5in] flex flex-col">
-          <div className="editable-header border-dashed border-2 border-cyan-500 rounded-md row-span-1 p-2 text-lg"><EditableInput value={headerText} onChange={handleHeaderChange}></EditableInput></div>
-          <div className="grid grid-flow-col justify-items-stretch my-4 h-full">
-            <div className="border-dashed border-2 border-cyan-500 rounded-md mr-2 p-2">
-              <div>
-                  {tasks.map((task:Task|NewTask) => {
-
-                    return <div key={task.id} className="flex flex-row">
-                      <div>{ task.id }</div>
-                      <EditableInput className="font-semibold text-xl" value={ task.title } onChange={(newValue:string) => {handleTaskTitleChange(task.id, newValue)}}></EditableInput>
-                      <RemoveButton onClick={() => { removeTask(task.id) }}/>
-                    </div>
-                  })}
-                <AddButton onClick={addNewTask} />
-              </div>
+        <div className="paper-legal border border-solid border-gray-300 border-1 drop-shadow-lg text-gray-600 px-[0.5in] py-[0.5in] flex flex-col">
+          <div className="editable-header border-dashed border-2 border-gray-300 hover:border-cyan-700 hover:bg-cyan-300 rounded-md row-span-1 p-2 text-lg">
+            <EditableInput
+              className="rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid"
+              value={headerText}
+              onChange={handleHeaderChange}
+            />
+          </div>
+          <div className="grid grid-flow-col grid-cols-3 justify-items-stretch my-4 h-full">
+            <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md mr-2 p-2">
+              <TaskList
+                tasks={tasks.slice(0, maxTasksPerCols)}
+                hasAddButton={tasks.length < maxTasksPerCols}
+                onAddTask={addNewTask}
+                onRemoveTask={removeTask}
+                onUpdateTask={handleTaskChange}
+              />
             </div>
-            <div className="border-dashed border-2 border-cyan-500 rounded-md mx-2 p-2">2</div>
-            <div className="border-dashed border-2 border-cyan-500 rounded-md ml-2 p-2">3</div>
+            <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md mx-2 p-2">
+              <TaskList
+                tasks={tasks.slice(maxTasksPerCols, maxTasksPerCols * 2)}
+                hasAddButton={tasks.length >= maxTasksPerCols && tasks.length < maxTasksPerCols * 2}
+                onAddTask={addNewTask}
+                onRemoveTask={removeTask}
+                onUpdateTask={handleTaskChange}
+              />
+            </div>
+            <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md ml-2 p-2">
+              <TaskList
+                tasks={tasks.slice(maxTasksPerCols * 2, maxTasksPerCols * 3)}
+                hasAddButton={tasks.length >= maxTasksPerCols * 2 && tasks.length < maxTasksPerCols * 3}
+                onAddTask={addNewTask}
+                onRemoveTask={removeTask}
+                onUpdateTask={handleTaskChange}
+              />
+            </div>
           </div>
         </div>
       </main>

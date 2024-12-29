@@ -1,8 +1,7 @@
-
-
 interface ButtonProps
 {
-    onClick?: Function
+    onClick?: Function,
+    className?: string
 }
 
 export type {

@@ -1,11 +1,10 @@
-"use client"
-import { PlusIcon } from "@heroicons/react/16/solid";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { ButtonProps } from "../interfaces/buttonProps";
 
 export default function AddButton(props:ButtonProps)
 {
     function handlePlusClick() {
-        props?.onClick()
+        if (props.onClick) props.onClick()
     }
 
     return (
@@ -13,10 +12,10 @@ export default function AddButton(props:ButtonProps)
             data-testid="add-button"
             onClick={handlePlusClick}
             aria-label="Add Task Button"
-            className="rounded-md p-1 m-1 bg-cyan-500 hover:bg-cyan-400 drop-shadow-md flex align-items-middle items-center content-center"
+            className={(props.className ?? "") + "rounded-md border-solid border-2 p-1 w-full bg-transparent text-cyan-700 hover:text-cyan-400 border-cyan-700 hover:border-cyan-400"}
         >
-            <div><PlusIcon className="size-4 text-white" /></div>
-            <div className="p-1 text-white">Add Task</div>
+            <PlusIcon className="size-4 mr-1 inline" />
+            Add Task
         </button>
     )
 }

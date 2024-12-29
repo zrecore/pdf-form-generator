@@ -26,7 +26,6 @@ body {
   }
 }
 
-
 .paper-legal
 {
   width:  8.5in;
@@ -36,10 +35,16 @@ body {
 
 .editable-input
 {
-  border: solid 1px #404040;
-  background-color: #909090;
+  display: block;
+  width: 100%;
 }
-.static-input
+.edit-mode
 {
-  cursor: text
+  cursor: text;
+  border: inset 1px #00a0d0;
+}
+.static-mode
+{
+  cursor: pointer;
+  border: solid 1px rgba(255, 255, 255, 0);
 }

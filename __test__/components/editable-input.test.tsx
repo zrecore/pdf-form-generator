@@ -1,6 +1,6 @@
 
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import React from 'react'
 import EditableInput from '../../src/app/components/editableInput'
 
@@ -8,35 +8,87 @@ describe(
   'components/editableInput',
   () => {
     it(
-      'Renders the component, and has default value: editableInput',
+      'Component has default value "Test Input": editableInput',
       () => {    
-        render(<EditableInput isEditable={true} value="Test Input" onChange={() => {}} />)
+        render(<EditableInput isEditable={true} value="Test Input" />)
 
         const dom = screen.getByTestId('test-input')
-        expect(dom).toBeInstanceOf(HTMLInputElement)
         expect(dom).toHaveValue("Test Input")
         
       }
     )
     it (
-      'Renders the component, and has NO default value: editableInput',
+      'Component has NO default value: editableInput',
       () => {
-        render(<EditableInput isEditable={true} value="" onChange={() => {}} />)
+        render(<EditableInput isEditable={true} />)
 
         const dom = screen.getByTestId('test-input')
-        expect(dom).toBeInstanceOf(HTMLInputElement)
         expect(dom).toHaveValue("")
       }
     )
 
     it (
-      'Handles the onChange event, and is editable',
-      () => {}
+      'Component is editable (is HTMLInputElement) : editableInput',
+      () => {
+        render(<EditableInput isEditable={true} value="" />)
+
+        const dom = screen.getByTestId('test-input')
+        expect(dom).toBeInstanceOf(HTMLInputElement)
+        expect(dom).toHaveClass('edit-mode')
+      }
     )
 
     it (
-      'Handles the onChange event, and is NOT editable',
-      () => {}
+      'Component is NOT editable (is HTMLDivElement : editableInput',
+      () => {
+        render(<EditableInput isEditable={false} value="" />)
+
+        const dom = screen.getByTestId('test-input')
+        expect(dom).toBeInstanceOf(HTMLDivElement)
+        expect(dom).toHaveClass('static-mode')
+      }
+    )
+
+    it (
+      'Component is clicked, handles click event: editableInput',
+      () => {
+        let clickValue = 0
+        
+        const handleClick = () => {
+          clickValue++
+        }
+        render(<EditableInput isEditable={true} onClick={handleClick} value="" />)
+
+        const dom = screen.getByTestId('test-input')
+
+        fireEvent(dom, new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true
+        }))
+        
+        expect(clickValue).toBe(1)
+      }
+    )
+
+    it(
+      'Component (edit-mode) is changed, handles change event: editableInput',
+      () => {
+        let value = ""
+        const handleChange = (newValue:string) => {
+          value = newValue
+        }
+        render(<EditableInput isEditable={true} onChange={handleChange} value="" />)
+
+        const dom = screen.getByTestId('test-input')
+
+        fireEvent.change(dom, {
+          bubbles: true,
+          cancelable: true,
+          target: {value: "Test Input"}
+        })
+        
+        expect(value).toBe("Test Input")
+      }
     )
   }
 )

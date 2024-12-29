@@ -1,4 +1,3 @@
-"use client"
 import { FC, useState } from "react"
 
 type EditableInputChangeFunction = {
@@ -13,14 +12,13 @@ interface EditableInputProps
     value?:string,
     isDirty?:boolean,
     isEditable?:boolean,
-
-    onChange:EditableInputChangeFunction
+    onClick?:Function,
+    onChange?:EditableInputChangeFunction
 }
 const EditableInput:FC<EditableInputProps> = (props) =>
 {
     const [inputValue, setInputValue] = useState(props.value ?? "")
     const [inputIsEditable, setInputIsEditable] = useState(props.isEditable ?? false)
-    const inputClassName = props.className ?? false
 
     function handleOnInputBlur() : void
     {
@@ -30,13 +28,15 @@ const EditableInput:FC<EditableInputProps> = (props) =>
     function handleOnInputChange(newValue:string) : void
     {
         setInputValue(newValue)
-        props.onChange(newValue)
+        if (props.onChange) props.onChange(newValue)
     }
 
-    function handleOnDoubleClick() : void
+    function handleOnClick() : void
     {
-        console.log("Double click")
+        // TODO: should props.onClick have event.preventDefault() to stop
+        // propagation to setInputIsEditable() call?
         setInputIsEditable(true)
+        if (props.onClick) props.onClick()
     }
     
     if (inputIsEditable)
@@ -46,16 +46,23 @@ const EditableInput:FC<EditableInputProps> = (props) =>
                 data-testid="test-input"
                 id={props.id}
                 name={props.name}
-                className={inputClassName + " editable-input"}
+                className={"p-1 editable-input edit-mode " + (props.className ?? "")}
                 type={props.type}
                 value={inputValue}
                 onChange={ev => handleOnInputChange(ev.target.value)}
+                onClick={handleOnClick}
                 onBlur={handleOnInputBlur}
+                onMouseLeave={handleOnInputBlur}
             ></input>
         )
     } else {
         return (
-            <div className={props.className + " static-input"} onDoubleClick={handleOnDoubleClick}>{inputValue}</div>
+            <div 
+                data-testid="test-input"
+                id={props.id}
+                className={"p-1 editable-input static-mode " + (props.className ?? "")}
+                onClick={handleOnClick}
+            >{inputValue}</div>
         )
     }
 }
