@@ -11,7 +11,7 @@ export default function RemoveButton(props:ButtonProps)
         <button
             data-testid="remove-button"
             onClick={handleRemoveClick}
-            className={(props.className ?? "") + " m-1 p-2"}>
+            className={(props.className ?? "") + " m-1"}>
             <XCircleIcon className="size-4" />
         </button>
     )

@@ -9,14 +9,89 @@ describe(
   'About',
   () => {
     it(
-      'Renders the home page',
+      'Renders the main page',
       () => {    
         render(<Page />)
 
-        const dom = screen.getByText('List')
+        const dom = screen.getByText('List Name')
         expect(dom)
-        .toHaveTextContent('List')
+        .toHaveTextContent('List Name')
       }
+    )
+
+    it(
+      'Adds a new task',
+      () => {}
+    )
+
+    it(
+      'Removes a task',
+      () => {}
+    )
+
+    it(
+      'Updates a task',
+      () => {}
+    )
+
+    it(
+      'Updates the header title',
+      () => {}
+    )
+
+    it(
+      'Adds a column',
+      () => {}
+    )
+
+    it(
+      'Removes a column',
+      () => {}
+    )
+
+    it(
+      'Adds a row',
+      () => {}
+    )
+
+    it(
+      'Removes a row',
+      () => {}
+    )
+
+    it(
+      'Can undo state',
+      () => {}
+    )
+
+    it(
+      'Can redo state',
+      () => {}
+    )
+
+    it(
+      'Can save state to storage',
+      () => {}
+    )
+
+    it(
+      'Can load state from storage',
+      () => {}
+    )
+
+    it(
+      'Can create a new list',
+      () => {}
+    )
+
+    it(
+      'Can export the list',
+      () => {}
+    )
+
+    it(
+      'Can import the list',
+      () => {}
     )
   }
 )

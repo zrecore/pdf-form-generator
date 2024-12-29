@@ -1,8 +1,6 @@
 "use client"
 
 import Image from "next/image";
-import AddButton from "./components/addButton";
-import RemoveButton from "./components/removeButton";
 import { useState } from "react";
 import PhotoButton from "./components/photoButton";
 import PrintButton from "./components/printButton";
@@ -16,11 +14,11 @@ export default function Home() {
 
   const savedTasks:(Task|NewTask)[]     = loadTasks()
   const [tasks, setTasks]               = useState(savedTasks)
-  const [headerText, setHeaderText]     = useState("Default Heading Text")
+  const [headerText, setHeaderText]     = useState("List Name")
   const [totalColumns, setTotalColumns] = useState(3)
   const [tempId, setTempId]             = useState(1)
 
-  const maxTasksPerCols = 20
+  const [totalRows, setTotalRows]       = useState(20)
 
   function loadTasks()
   {
@@ -29,7 +27,7 @@ export default function Home() {
 
   function addNewTask()
   {
-    if (tasks.length >= maxTasksPerCols * 3) return
+    if (tasks.length >= totalRows * 3) return
 
     const newTask: NewTask = {
       id: tempId,
@@ -80,7 +78,6 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center">
       <main className="flex flex-col gap-4 items-center sm:items-start">
-      <h1 className="font-semibold text-gray-600 text-lg p-4 m-0">List</h1>
         <div className="grid grid-flow-col justify-start align-middle space-x-4 w-full border border-solid border-slate-700 text-white bg-slate-600 font-semibold border-1 drop-shadow-lg p-4">
           <div>Columns: <input type="number" value={totalColumns} onChange={e => handleTotalColumnsUpdate(parseInt(e.target.value))} /></div>
           <PhotoButton />
@@ -89,7 +86,7 @@ export default function Home() {
         <div className="paper-legal border border-solid border-gray-300 border-1 drop-shadow-lg text-gray-600 px-[0.5in] py-[0.5in] flex flex-col">
           <div className="editable-header border-dashed border-2 border-gray-300 hover:border-cyan-700 hover:bg-cyan-300 rounded-md row-span-1 p-2 text-lg">
             <EditableInput
-              className="rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid"
+              className="rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid text-lg font-bold"
               value={headerText}
               onChange={handleHeaderChange}
             />
@@ -97,8 +94,8 @@ export default function Home() {
           <div className="grid grid-flow-col grid-cols-3 justify-items-stretch my-4 h-full">
             <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md mr-2 p-2">
               <TaskList
-                tasks={tasks.slice(0, maxTasksPerCols)}
-                hasAddButton={tasks.length < maxTasksPerCols}
+                tasks={tasks.slice(0, totalRows)}
+                hasAddButton={tasks.length < totalRows}
                 onAddTask={addNewTask}
                 onRemoveTask={removeTask}
                 onUpdateTask={handleTaskChange}
@@ -106,8 +103,8 @@ export default function Home() {
             </div>
             <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md mx-2 p-2">
               <TaskList
-                tasks={tasks.slice(maxTasksPerCols, maxTasksPerCols * 2)}
-                hasAddButton={tasks.length >= maxTasksPerCols && tasks.length < maxTasksPerCols * 2}
+                tasks={tasks.slice(totalRows, totalRows * 2)}
+                hasAddButton={tasks.length >= totalRows && tasks.length < totalRows * 2}
                 onAddTask={addNewTask}
                 onRemoveTask={removeTask}
                 onUpdateTask={handleTaskChange}
@@ -115,8 +112,8 @@ export default function Home() {
             </div>
             <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md ml-2 p-2">
               <TaskList
-                tasks={tasks.slice(maxTasksPerCols * 2, maxTasksPerCols * 3)}
-                hasAddButton={tasks.length >= maxTasksPerCols * 2 && tasks.length < maxTasksPerCols * 3}
+                tasks={tasks.slice(totalRows * 2, totalRows * 3)}
+                hasAddButton={tasks.length >= totalRows * 2 && tasks.length < totalRows * 3}
                 onAddTask={addNewTask}
                 onRemoveTask={removeTask}
                 onUpdateTask={handleTaskChange}
