@@ -26,7 +26,7 @@ export default function TaskList(props:TaskProps)
     }
 
     return (
-        <ul className="task-list m-0 p-0">
+        <ul data-testid="task-list" className="task-list m-0 p-0">
             {
                 props.tasks?.map((task:Task|NewTask) => {
 
