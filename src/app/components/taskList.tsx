@@ -14,6 +14,17 @@ export default function TaskList(props:TaskProps)
         if (props.onRemoveTask) props.onRemoveTask(taskId)
     }
 
+    function handleOnReturn(id:number) {
+        var index = props.tasks.findIndex((t) => t.id == id)
+        if (index < 0) return
+
+        ++index
+        if (index > props.tasks.length - 1) index = 0
+
+        document.getElementById("task-" + props.tasks[index].id).focus()
+        if (props.onReturn) props.onReturn(props.tasks[index].id)
+    }
+
     function handleUpdateTask(newValue:Task)
     {
         if (props.onUpdateTask) props.onUpdateTask(newValue)
@@ -53,6 +64,7 @@ export default function TaskList(props:TaskProps)
                             rounded-sm" />
                     </label>
                     <EditableInput
+                        id={"task-" + task.id}
                         tabIndex={task.id}
                         className="rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid text-nowrap text-sm/[0.125in]"
                         value={ task.title }
@@ -64,6 +76,7 @@ export default function TaskList(props:TaskProps)
                                 )
                             }
                         }
+                        onReturn={() => { handleOnReturn(task.id) }}
                     />
                     <RemoveButton
                         className="ml-0 text-white hover:text-red-700"

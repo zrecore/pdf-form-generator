@@ -67,10 +67,9 @@ const EditableInput:FC<EditableInputProps> = (props) =>
         if (props.onClick) props.onClick()
     }
 
-    function handleOnReturn(newValue:string) : void
+    function handleOnReturn(key:string, newValue:string) : void
     {
-        handleOnInputChange(newValue)
-
+        if (key == 'Tab' || key == 'Enter') handleOnInputChange(newValue)
         if (props.onReturn) props.onReturn(newValue)
     }
     
@@ -89,7 +88,7 @@ const EditableInput:FC<EditableInputProps> = (props) =>
                 onClick={handleOnClick}
                 onBlur={handleOnInputBlur}
                 onFocus={handleOnInputFocus}
-                onKeyUp={(ev) => ev.key == 'Tab' || ev.key == 'Enter' ? handleOnReturn(ev.currentTarget.value) : ''}
+                onKeyUp={(ev) => handleOnReturn(ev.key, ev.currentTarget.value)}
                 maxLength={inputMaxLength}
             ></input>
         )

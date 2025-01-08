@@ -41,7 +41,7 @@ body {
 .edit-mode
 {
   cursor: text;
-  border: inset 1px #00a0d0;
+  border: solid 1px #00a0d0;
 }
 .static-mode
 {

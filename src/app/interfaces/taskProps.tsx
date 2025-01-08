@@ -7,6 +7,7 @@ interface TaskProps {
     onAddTask?: Function,
     onRemoveTask?: Function,
     onUpdateTask?: Function,
+    onReturn?: Function,
     className?: string,
     tasks?: (Task|NewTask)[],
     hasAddButton?: Boolean
