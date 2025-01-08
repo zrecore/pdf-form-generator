@@ -30,16 +30,11 @@ const EditableInput:FC<EditableInputProps> = (props) =>
     const [inputMaxLength, setInputMaxLength] = useState(props.maxLength ?? 15)
     const [inputId, setInputId] = useState(props.id ?? defaultUUID)
 
-    function handleOnInputBlur() : void
+    function handleOnInputBlur(target:HTMLElement) : void
     {
-        const input = document.getElementById(inputId)
         setInputIsEditable(false)
 
-        if (input === document.activeElement) {
-            input.blur()
-        }
-
-        if (props.onBlur) props.onBlur(input)
+        if (props.onBlur) props.onBlur(target)
 
     }
     function handleOnInputFocus() : void
@@ -73,7 +68,7 @@ const EditableInput:FC<EditableInputProps> = (props) =>
         const target : HTMLInputElement = ev.currentTarget as HTMLInputElement
         
         if ( (key == 'Tab' || key == 'Enter') && props.onReturn) {
-            if (!inputIsEditable) setInputIsEditable(false)
+            if (inputIsEditable) setInputIsEditable(false)
         }
 
         if (key == 'Enter' && props.onReturn) {
@@ -92,7 +87,7 @@ const EditableInput:FC<EditableInputProps> = (props) =>
             value={inputValue}
             onChange={ev => handleOnInputChange(ev.target.value)}
             onClick={handleOnClick}
-            onBlur={handleOnInputBlur}
+            onBlur={(ev) => handleOnInputBlur(ev.target)}
             onFocus={handleOnInputFocus}
             onKeyUp={(ev) => handleOnKeyUp(ev)}
             maxLength={inputMaxLength}

@@ -127,5 +127,25 @@ describe(
         expect(value).toBe(dom)
       }
     )
+
+    it(
+      'Component handles onBlur event: editableInput handleOnBlur()',
+      () => {
+        let value:HTMLElement|null = null
+        const handleOnBlur = (input:HTMLElement) => {
+          value = input
+        }
+        render(<EditableInput isEditable={true} onBlur={handleOnBlur} value="Test" />)
+
+        const dom = screen.getByTestId('test-input')
+        fireEvent.focus(dom)
+        expect(dom).toHaveClass('edit-mode')
+        
+        fireEvent.blur(dom)
+        
+        expect(value).toBe(dom)
+        expect(dom).not.toHaveClass('edit-mode')
+      }
+    )
   }
 )
