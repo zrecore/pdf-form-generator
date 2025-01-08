@@ -109,9 +109,9 @@ describe(
 
                 render(<TaskList tasks={tasks} hasAddButton={true} onUpdateTask={handleUpdateTask} />)
                 const dom = screen.getByTestId('task-list')
-                const domTaskListItemDiv = dom.getElementsByClassName('editable-input')[0]
+                const domTaskListItemElem = dom.getElementsByClassName('editable-input')[0]
                 
-                fireEvent(domTaskListItemDiv, new MouseEvent("click", {
+                fireEvent(domTaskListItemElem, new MouseEvent("click", {
                     bubbles: true,
                     cancelable: true
                 }))
@@ -153,14 +153,14 @@ describe(
 
                 render(<TaskList tasks={tasks} hasAddButton={true} onReturn={handleOnReturn} />)
                 const dom = screen.getByTestId('task-list')
-                const domTaskListItemDiv = dom.getElementsByClassName('editable-input')[0]
-                
-                fireEvent(domTaskListItemDiv, new MouseEvent("click", {
+                const domTaskListItemElem = dom.getElementsByClassName('editable-input')[0]
+                // Focus should go to the next task item
+                fireEvent(domTaskListItemElem, new MouseEvent("click", {
                     bubbles: true,
                     cancelable: true
                 }))
 
-                const domTaskListItemInput = dom.getElementsByClassName('edit-mode')[0]
+                let domTaskListItemInput = dom.getElementsByClassName('edit-mode')[0]
                 
                 fireEvent.keyUp(domTaskListItemInput, {
                     key: 'Enter',
@@ -168,6 +168,37 @@ describe(
                 })
 
                 expect(value).toBe(2)
+
+                domTaskListItemInput = dom.getElementsByClassName('edit-mode')[0]
+                
+                fireEvent.keyUp(domTaskListItemInput, {
+                    key: 'Enter',
+                    code: 'Enter'
+                })
+                // It should cycle back to the first task item
+                expect(value).toBe(1)
+            }
+        )
+
+        it(
+            'Should display the Add button',
+            () => {
+                let tasks:Array<Task> = []
+                render(<TaskList tasks={tasks} hasAddButton={true} />)
+                const dom = screen.getByTestId('add-button').parentElement
+                expect(dom).toBeTruthy()
+                expect(dom).not.toHaveClass('hidden')
+            }
+        )
+
+        it(
+            'Should hide the Add button',
+            () => {
+                let tasks:Array<Task> = []
+                render(<TaskList tasks={tasks} hasAddButton={false} />)
+                const dom = screen.getByTestId('add-button').parentElement
+                expect(dom).toBeTruthy()
+                expect(dom).toHaveClass('hidden')
             }
         )
     }

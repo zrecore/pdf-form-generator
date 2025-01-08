@@ -21,14 +21,15 @@ export default function TaskList(props:TaskProps)
     }
     function handleReturn(input:HTMLInputElement)
     {
-        // console.log("handleReturn ****")
         const taskId = parseInt(input.id.replace('task-', ''))
         let taskIndex = props.tasks.findIndex((t) => t.id == taskId)
         const task = props.tasks[taskIndex]
         taskIndex++
+
         if (taskIndex > props.tasks.length - 1) taskIndex = 0
+
         const nextTask = props.tasks[taskIndex]
-        // console.log('task', task, 'nextTask', nextTask)
+        
         document.getElementById('task-' + nextTask.id).focus()
 
         if (props.onReturn) props.onReturn(nextTask.id)
@@ -91,7 +92,9 @@ export default function TaskList(props:TaskProps)
                 })
             }
             
-            <li className={"m-0 p-0 " + (props.hasAddButton ? "" : "hidden")}><AddButton onClick={handleAddTask} /></li>
+            <li className={"m-0 p-0 " + (!props.hasAddButton ? "hidden" : "")}>
+                <AddButton onClick={handleAddTask} />
+            </li>
 
         </ul>
     )
