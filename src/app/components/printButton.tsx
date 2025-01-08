@@ -13,9 +13,9 @@ export default function PrintButton(props: ButtonProps)
             aria-label="Print"
             aria-description="Print the current page as a list with checkboxes."
             onClick={handlePrintClick}
-            className={(props.className ?? "") + " rounded-md p-2 bg-slate-500 hover:bg-slate-400 drop-shadow-md"}
+            className={(props.className ?? "") + " rounded-md p-2 bg-white border-solid border-2 border-cyan-800 text-cyan-800 hover:border-cyan-400 hover:bg-white hover:text-cyan-400"}
         >
-            <PrinterIcon className="size-6 text-white" />
+            <PrinterIcon className="size-6" />
         </button>
     )
 }

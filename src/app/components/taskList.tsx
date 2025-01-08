@@ -84,7 +84,7 @@ export default function TaskList(props:TaskProps)
                         onReturn={handleReturn}
                     />
                     <RemoveButton
-                        className="ml-0 text-white hover:text-red-700"
+                        className="ml-0 text-gray-200 hover:text-red-700 print:hidden"
                         onClick={() => { handleRemoveTask(task.id) }}
                     />
                 </li>

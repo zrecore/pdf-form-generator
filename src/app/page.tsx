@@ -83,7 +83,29 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center print:m-0 print:p-0">
       <main className="flex flex-col gap-4 items-center sm:items-start print:border-none print:m-0 print:p-0">
-        <div className="grid grid-flow-col justify-start align-middle space-x-4 w-full border border-solid border-slate-700 text-white bg-slate-600 font-semibold drop-shadow-lg p-4 print:border-none print:drop-shadow-none print:hidden">
+        <div
+          className="
+            grid
+            grid-flow-col
+            justify-start
+            align-middle
+            space-x-4
+            w-full
+            border-solid
+            border-2
+            rounded-md
+            border-cyan-700
+            text-cyan-800
+            bg-white
+            font-semibold
+            drop-shadow-lg
+            mt-2
+            p-4
+            print:border-none
+            print:drop-shadow-none
+            print:hidden
+          "
+        >
           
           <PrintButton onClick={(ev) => handleOnPrint() } />
         </div>
