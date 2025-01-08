@@ -1,0 +1,17 @@
+dist: jammy
+language: node_js
+node_js:
+  - 20
+cache:
+  npm: true
+  directories:
+    - "~/.pnpm-store"
+    - "~/node_modules"
+env:
+  - PATH=$PATH:~/node_modules/.bin/:~/.pnpm-store
+before_install:
+  - npm i -g pnpm
+install:
+  - pnpm install
+script:
+  - pnpm test

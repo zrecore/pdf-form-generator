@@ -15,5 +15,9 @@ const config: Config = {
     },
   },
   plugins: [],
+  extend: {
+    print: { raw: 'print' },
+    screen: { raw: 'screen' }
+  }
 };
 export default config;

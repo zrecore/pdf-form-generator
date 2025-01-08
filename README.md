@@ -33,9 +33,28 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Test
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project uses Jest to run tests. Open a new terminal and run one of the following to test:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Single run of tests
+docker compose exec webapp pnpm test
+```
 
+
+or
+
+
+```bash
+# Continuously run, watch for changes
+docker compose exec webapp pnpm test:watch
+```
+
+## Build
+
+Run the following to build the `src` directory:
+
+```bash
+docker compose exec webapp pnpm src 
+```

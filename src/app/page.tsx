@@ -1,101 +1,154 @@
+"use client"
+
 import Image from "next/image";
+import { useState } from "react";
+import PhotoButton from "./components/photoButton";
+import PrintButton from "./components/printButton";
+import EditableInput from "./components/editableInput";
+import { revalidate } from "./actions/serverActions";
+import { NewTask, Task } from "./interfaces/task";
+import TaskList from "./components/taskList";
+
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const savedTasks:(Task|NewTask)[]     = loadTasks()
+  const [tasks, setTasks]               = useState(savedTasks)
+  const [headerText, setHeaderText]     = useState("List Name")
+  const [totalColumns, setTotalColumns] = useState(3)
+  const [tempId, setTempId]             = useState(1)
+
+  const [totalRows, setTotalRows]       = useState(18)
+
+  function loadTasks()
+  {
+    return []
+  }
+
+  function addNewTask()
+  {
+    if (tasks.length >= totalRows * 3) return
+
+    const newTask: NewTask = {
+      id: tempId,
+      title: "New Task",
+      description: "Task Description",
+      isComplete: false
+    }
+    tasks.push(newTask)
+    setTasks(tasks)
+    setTempId(tempId + 1)
+
+    revalidate("/")
+  }
+
+  function removeTask(id:number)
+  {
+    setTasks(
+      tasks.filter((t:Task|NewTask) => {
+        return t.id != id
+      })
+    )
+    revalidate("/")
+  }
+
+  function handleHeaderChange(newValue:string)
+  {
+    setHeaderText(newValue)
+    revalidate("/")
+  }
+
+  function handleTaskChange(updatedTask:Task)
+  {
+    setTasks(tasks.map((t) => {
+      if (t.id == updatedTask.id)
+      {
+        t = updatedTask
+      }
+      return t
+    }))
+    revalidate("/")
+  }
+
+  function handleTotalColumnsUpdate(newValue:number)
+  {
+    setTotalColumns(newValue)
+  }
+
+  function handleOnPrint()
+  {
+    window.print()
+  }
+
+  return (
+    <div className="flex flex-col justify-center items-center print:m-0 print:p-0">
+      <main className="flex flex-col gap-4 items-center sm:items-start print:border-none print:m-0 print:p-0">
+        <div
+          className="
+            grid
+            grid-flow-col
+            justify-start
+            align-middle
+            space-x-4
+            w-full
+            border-solid
+            border-2
+            rounded-md
+            border-cyan-700
+            text-cyan-800
+            bg-white
+            font-semibold
+            drop-shadow-lg
+            mt-2
+            p-4
+            print:border-none
+            print:drop-shadow-none
+            print:hidden
+          "
+        >
+          
+          <PrintButton onClick={(ev) => handleOnPrint() } />
+        </div>
+        <div className="paper-legal border border-solid border-gray-300 border-1 drop-shadow-lg text-gray-600 px-[0.25in] py-[0.25in] flex flex-col print:m-0 print:drop-shadow-none print:border-none">
+          <div className="editable-header border-dashed border-2 border-gray-300 hover:border-cyan-700 hover:bg-cyan-300 rounded-md row-span-1 p-2 text-lg print:border-none">
+            <EditableInput
+              className="rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid text-lg font-bold print:border-none"
+              value={headerText}
+              onChange={handleHeaderChange}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+          <div className="grid grid-flow-col grid-cols-3 justify-items-stretch my-4 h-full">
+            <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md mr-2 p-2 print:border-none">
+              <TaskList
+                tasks={tasks.slice(0, totalRows)}
+                hasAddButton={tasks.length < totalRows}
+                onAddTask={addNewTask}
+                onRemoveTask={removeTask}
+                onUpdateTask={handleTaskChange}
+              />
+            </div>
+            <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md mx-2 p-2 print:border-none">
+              <TaskList
+                tasks={tasks.slice(totalRows, totalRows * 2)}
+                hasAddButton={tasks.length >= totalRows && tasks.length < totalRows * 2}
+                onAddTask={addNewTask}
+                onRemoveTask={removeTask}
+                onUpdateTask={handleTaskChange}
+              />
+            </div>
+            <div className="border-dashed border-2 border-gray-300 hover:border-cyan-700 rounded-md ml-2 p-2 print:border-none">
+              <TaskList
+                tasks={tasks.slice(totalRows * 2, totalRows * 3)}
+                hasAddButton={tasks.length >= totalRows * 2 && tasks.length < totalRows * 3}
+                onAddTask={addNewTask}
+                onRemoveTask={removeTask}
+                onUpdateTask={handleTaskChange}
+              />
+            </div>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      
     </div>
   );
 }

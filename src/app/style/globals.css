@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #c0c0c0;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -24,4 +24,25 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.paper-legal
+{
+  width:  calc(8.5in - 1.5in);
+  height: calc(11in - 1.5in);
+  background: white;
+}
+
+.editable-input
+{
+  display: block;
+  width: 100%;
+}
+.edit-mode
+{
+  cursor: text;
+}
+.static-mode
+{
+  cursor: pointer;
 }
