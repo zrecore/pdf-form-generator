@@ -9,6 +9,7 @@ export default function AddButton(props:ButtonProps)
 
     return (
         <button
+            tabIndex={0}
             data-testid="add-button"
             onClick={handlePlusClick}
             aria-label="Add Task Button"

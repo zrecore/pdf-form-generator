@@ -33,10 +33,10 @@ const EditableInput:FC<EditableInputProps> = (props) =>
     function handleOnInputBlur() : void
     {
         const input = document.getElementById(inputId)
-        // setInputIsEditable(false)
+        setInputIsEditable(false)
 
         if (input === document.activeElement) {
-            //input.blur()
+            input.blur()
         }
 
         if (props.onBlur) props.onBlur(input)
@@ -73,42 +73,31 @@ const EditableInput:FC<EditableInputProps> = (props) =>
         const target : HTMLInputElement = ev.currentTarget as HTMLInputElement
         
         if ( (key == 'Tab' || key == 'Enter') && props.onReturn) {
-            setInputIsEditable(false)
+            if (!inputIsEditable) setInputIsEditable(false)
+        }
+
+        if (key == 'Enter' && props.onReturn) {
             props.onReturn(target)
         }
     }
-    
-    if (inputIsEditable)
-    {
-        return (
-            <input
-                tabIndex={props.tabIndex ?? 0}
-                data-testid="test-input"
-                id={inputId}
-                name={props.name}
-                className={"p-1 editable-input edit-mode " + (props.className ?? "") + " print:p-0"}
-                type={props.type}
-                value={inputValue}
-                onChange={ev => handleOnInputChange(ev.target.value)}
-                onClick={handleOnClick}
-                onBlur={handleOnInputBlur}
-                onFocus={handleOnInputFocus}
-                onKeyUp={(ev) => handleOnKeyUp(ev)}
-                maxLength={inputMaxLength}
-            ></input>
-        )
-    } else {
-        return (
-            <div 
-                tabIndex={props.tabIndex}
-                data-testid="test-input"
-                id={inputId}
-                className={"p-1 editable-input static-mode " + (props.className ?? "")}
-                onClick={handleOnClick}
-                onFocus={handleOnInputFocus}
-            >{inputValue}</div>
-        )
-    }
+
+    return (
+        <input
+            tabIndex={props.tabIndex ?? 0}
+            data-testid="test-input"
+            id={inputId}
+            name={props.name}
+            className={"p-1 editable-input " + (inputIsEditable ? "edit-mode " : "static-mode ") + (props.className ?? "") + " print:p-0"}
+            type={props.type}
+            value={inputValue}
+            onChange={ev => handleOnInputChange(ev.target.value)}
+            onClick={handleOnClick}
+            onBlur={handleOnInputBlur}
+            onFocus={handleOnInputFocus}
+            onKeyUp={(ev) => handleOnKeyUp(ev)}
+            maxLength={inputMaxLength}
+        ></input>
+    )
 }
 
 export default EditableInput

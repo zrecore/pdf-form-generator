@@ -19,6 +19,20 @@ export default function TaskList(props:TaskProps)
     {
         if (props.onUpdateTask) props.onUpdateTask(newValue)
     }
+    function handleReturn(input:HTMLInputElement)
+    {
+        // console.log("handleReturn ****")
+        const taskId = parseInt(input.id.replace('task-', ''))
+        let taskIndex = props.tasks.findIndex((t) => t.id == taskId)
+        const task = props.tasks[taskIndex]
+        taskIndex++
+        if (taskIndex > props.tasks.length - 1) taskIndex = 0
+        const nextTask = props.tasks[taskIndex]
+        // console.log('task', task, 'nextTask', nextTask)
+        document.getElementById('task-' + nextTask.id).focus()
+
+        if (props.onReturn) props.onReturn(nextTask.id)
+    }
 
     function generateUpdatedTask(task:Task, updatedProperties:Object)
     {
@@ -34,6 +48,7 @@ export default function TaskList(props:TaskProps)
                 return <li key={task.id} className="task-item flex flex-row hover:bg-cyan-300 m-0 p-0">
                     <label className="flex items-center p-0 m-0 mb-1 cursor-pointer text-lg/[0.2in] select-none">
                         <input
+                            tabIndex={0}
                             type="checkbox"
                             className="hidden opacity-0 cursor-pointer h-[0.2in] w-[0.2in] peer checked:bg-white checked:text-black"
                         />
@@ -66,6 +81,7 @@ export default function TaskList(props:TaskProps)
                                 )
                             }
                         }
+                        onReturn={handleReturn}
                     />
                     <RemoveButton
                         className="ml-0 text-white hover:text-red-700"

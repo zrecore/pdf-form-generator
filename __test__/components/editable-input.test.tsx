@@ -39,12 +39,12 @@ describe(
     )
 
     it (
-      'Component is NOT editable (is HTMLDivElement : editableInput',
+      'Component is NOT editable (is HTMLInputElement : editableInput',
       () => {
         render(<EditableInput isEditable={false} value="" />)
 
         const dom = screen.getByTestId('test-input')
-        expect(dom).toBeInstanceOf(HTMLDivElement)
+        expect(dom).toBeInstanceOf(HTMLInputElement)
         expect(dom).toHaveClass('static-mode')
       }
     )

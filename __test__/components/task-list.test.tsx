@@ -170,47 +170,5 @@ describe(
                 expect(value).toBe(2)
             }
         )
-
-        it(
-            'Should change focus from current task item to next through handleOnReturn() event, TAB key',
-            () => {
-                let tasks = [
-                    {
-                        id: 1,
-                        title: 'Test 1',
-                        description: 'Description of Test 1',
-                        isComplete: false
-                    } as Task,
-                    {
-                        id: 2,
-                        title: 'Test 2',
-                        description: 'Description of Test 2',
-                        isComplete: false
-                    } as Task
-                ]
-                let value = 0
-                const handleOnReturn = (id:number) => {
-                    value = id
-                }
-
-                render(<TaskList tasks={tasks} hasAddButton={true} onReturn={handleOnReturn} />)
-                const dom = screen.getByTestId('task-list')
-                const domTaskListItemDiv = dom.getElementsByClassName('editable-input')[0]
-                
-                fireEvent(domTaskListItemDiv, new MouseEvent("click", {
-                    bubbles: true,
-                    cancelable: true
-                }))
-
-                const domTaskListItemInput = dom.getElementsByClassName('edit-mode')[0]
-                
-                fireEvent.keyUp(domTaskListItemInput, {
-                    key: 'Tab',
-                    code: 'Tab'
-                })
-
-                expect(value).toBe(2)
-            }
-        )
     }
 )

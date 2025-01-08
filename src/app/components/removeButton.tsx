@@ -9,6 +9,7 @@ export default function RemoveButton(props:ButtonProps)
 
     return (
         <button
+            tabIndex={0}
             data-testid="remove-button"
             onClick={handleRemoveClick}
             className={(props.className ?? "") + " m-1"}>
