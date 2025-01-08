@@ -90,5 +90,42 @@ describe(
         expect(value).toBe("Test Input")
       }
     )
+
+    it(
+      'Component receives focus, handles onFocus event: editableInput, handleOnInputFocus()',
+      () => {
+        let value = null
+        const handleFocus = (input:HTMLInputElement) => {
+          value = input
+        }
+        render(<EditableInput isEditable={true} onFocus={handleFocus} value="" />)
+
+        const dom = screen.getByTestId('test-input')
+
+        fireEvent.focus(dom)
+        
+        expect(value).toBe(dom)
+      }
+    )
+
+    it(
+      'Component receives focus, handles onReturn event: editableInput, handleOnReturn()',
+      () => {
+        let value = ""
+        const handleReturn = (result:string) => {
+          value = result
+        }
+        render(<EditableInput isEditable={true} onReturn={handleReturn} value="Test" />)
+
+        const dom = screen.getByTestId('test-input')
+
+        fireEvent.keyUp(dom, {
+          key: 'Enter',
+          code: 'Enter'
+        })
+        
+        expect(value).toBe("Test")
+      }
+    )
   }
 )

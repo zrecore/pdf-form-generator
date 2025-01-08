@@ -30,10 +30,33 @@ export default function TaskList(props:TaskProps)
             {
                 props.tasks?.map((task:Task|NewTask) => {
 
-                return <li key={task.id} className="flex flex-row hover:bg-cyan-300 m-0 p-0">
+                return <li key={task.id} className="task-item flex flex-row hover:bg-cyan-300 m-0 p-0">
+                    <label className="flex items-center p-0 m-0 mb-1 cursor-pointer text-lg/[0.2in] select-none">
+                        <input
+                            type="checkbox"
+                            className="hidden opacity-0 cursor-pointer h-[0.2in] w-[0.2in] peer checked:bg-white checked:text-black"
+                        />
+                        <div className="
+                            pl-[0.025in]
+                            w-[0.2in]
+                            h-[0.2in]
+                            bg-gray-200
+                            peer-checked:bg-white
+                            peer-checked:text-black
+                            after:content-none
+                            peer-checked:after:content-['✓']
+                            hover:bg-gray-400
+                            border
+                            border-1
+                            border-solid
+                            border-gray-800
+                            rounded-sm" />
+                    </label>
                     <EditableInput
-                        className="rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid"
+                        tabIndex={task.id}
+                        className="rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid text-nowrap text-sm/[0.125in]"
                         value={ task.title }
+                        maxLength={ 15 }
                         onChange={
                             (newValue:string) => {
                                 handleUpdateTask(

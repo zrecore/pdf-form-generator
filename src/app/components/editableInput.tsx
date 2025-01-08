@@ -1,4 +1,6 @@
-import { FC, useState } from "react"
+"use client"
+
+import { FC, useState, useId } from "react"
 
 type EditableInputChangeFunction = {
     (newValue:string): void
@@ -13,16 +15,42 @@ interface EditableInputProps
     isDirty?:boolean,
     isEditable?:boolean,
     onClick?:Function,
-    onChange?:EditableInputChangeFunction
+    onChange?:EditableInputChangeFunction,
+    onFocus?:Function,
+    onBlur?:Function,
+    onReturn?:Function,
+    maxLength?:number,
+    tabIndex?:number
 }
 const EditableInput:FC<EditableInputProps> = (props) =>
 {
+    const defaultUUID = useId()
     const [inputValue, setInputValue] = useState(props.value ?? "")
     const [inputIsEditable, setInputIsEditable] = useState(props.isEditable ?? false)
+    const [inputMaxLength, setInputMaxLength] = useState(props.maxLength ?? 15)
+    const [inputId, setInputId] = useState(props.id ?? defaultUUID)
 
     function handleOnInputBlur() : void
     {
-        setInputIsEditable(false);
+        const input = document.getElementById(inputId)
+        setInputIsEditable(false)
+
+        if (input === document.activeElement) {
+            input.blur()
+        }
+
+        if (props.onBlur) props.onBlur(input)
+
+    }
+    function handleOnInputFocus() : void
+    {
+        const input = document.getElementById(inputId)
+        setInputIsEditable(true)
+        if (input !== document.activeElement) {
+            input.focus()
+        }
+
+        if (props.onFocus) props.onFocus(input)
     }
 
     function handleOnInputChange(newValue:string) : void
@@ -38,30 +66,43 @@ const EditableInput:FC<EditableInputProps> = (props) =>
         setInputIsEditable(true)
         if (props.onClick) props.onClick()
     }
+
+    function handleOnReturn(newValue:string) : void
+    {
+        handleOnInputChange(newValue)
+
+        if (props.onReturn) props.onReturn(newValue)
+    }
     
     if (inputIsEditable)
     {
         return (
             <input
+                tabIndex={props.tabIndex ?? 0}
                 data-testid="test-input"
-                id={props.id}
+                id={inputId}
                 name={props.name}
-                className={"p-1 editable-input edit-mode " + (props.className ?? "")}
+                className={"p-1 editable-input edit-mode " + (props.className ?? "") + " print:p-0"}
                 type={props.type}
                 value={inputValue}
                 onChange={ev => handleOnInputChange(ev.target.value)}
                 onClick={handleOnClick}
                 onBlur={handleOnInputBlur}
-                onMouseLeave={handleOnInputBlur}
+                onFocus={handleOnInputFocus}
+                onKeyUp={(ev) => ev.key == 'Tab' || ev.key == 'Enter' ? handleOnReturn(ev.currentTarget.value) : ''}
+                maxLength={inputMaxLength}
             ></input>
         )
     } else {
         return (
             <div 
+                tabIndex={props.tabIndex}
                 data-testid="test-input"
-                id={props.id}
+                id={inputId}
                 className={"p-1 editable-input static-mode " + (props.className ?? "")}
                 onClick={handleOnClick}
+                onFocus={handleOnInputFocus}
+                onBlur={handleOnInputBlur}
             >{inputValue}</div>
         )
     }
