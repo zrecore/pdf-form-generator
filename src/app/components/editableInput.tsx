@@ -33,10 +33,10 @@ const EditableInput:FC<EditableInputProps> = (props) =>
     function handleOnInputBlur() : void
     {
         const input = document.getElementById(inputId)
-        setInputIsEditable(false)
+        // setInputIsEditable(false)
 
         if (input === document.activeElement) {
-            input.blur()
+            //input.blur()
         }
 
         if (props.onBlur) props.onBlur(input)
@@ -106,7 +106,6 @@ const EditableInput:FC<EditableInputProps> = (props) =>
                 className={"p-1 editable-input static-mode " + (props.className ?? "")}
                 onClick={handleOnClick}
                 onFocus={handleOnInputFocus}
-                onBlur={handleOnInputBlur}
             >{inputValue}</div>
         )
     }

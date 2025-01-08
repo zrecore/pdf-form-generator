@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NewTask, Task } from "../interfaces/task";
 import { TaskProps } from "../interfaces/taskProps";
 import AddButton from "./addButton";
@@ -12,17 +13,6 @@ export default function TaskList(props:TaskProps)
 
     function handleRemoveTask(taskId:number) {
         if (props.onRemoveTask) props.onRemoveTask(taskId)
-    }
-
-    function handleOnReturn(id:number) {
-        var index = props.tasks.findIndex((t) => t.id == id)
-        if (index < 0) return
-
-        ++index
-        if (index > props.tasks.length - 1) index = 0
-
-        document.getElementById("task-" + props.tasks[index].id).focus()
-        if (props.onReturn) props.onReturn(props.tasks[index].id)
     }
 
     function handleUpdateTask(newValue:Task)
@@ -76,7 +66,6 @@ export default function TaskList(props:TaskProps)
                                 )
                             }
                         }
-                        onReturn={() => { handleOnReturn(task.id) }}
                     />
                     <RemoveButton
                         className="ml-0 text-white hover:text-red-700"
