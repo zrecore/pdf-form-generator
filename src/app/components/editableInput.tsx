@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useState, useId } from "react"
+import { FC, useState, useId, KeyboardEvent } from "react"
 
 type EditableInputChangeFunction = {
     (newValue:string): void
@@ -67,10 +67,15 @@ const EditableInput:FC<EditableInputProps> = (props) =>
         if (props.onClick) props.onClick()
     }
 
-    function handleOnReturn(key:string, newValue:string) : void
+    function handleOnKeyUp(ev: KeyboardEvent) : void
     {
-        if (key == 'Tab' || key == 'Enter') handleOnInputChange(newValue)
-        if (props.onReturn) props.onReturn(newValue)
+        const key = ev.key
+        const target : HTMLInputElement = ev.currentTarget as HTMLInputElement
+        
+        if ( (key == 'Tab' || key == 'Enter') && props.onReturn) {
+            setInputIsEditable(false)
+            props.onReturn(target)
+        }
     }
     
     if (inputIsEditable)
@@ -88,7 +93,7 @@ const EditableInput:FC<EditableInputProps> = (props) =>
                 onClick={handleOnClick}
                 onBlur={handleOnInputBlur}
                 onFocus={handleOnInputFocus}
-                onKeyUp={(ev) => handleOnReturn(ev.key, ev.currentTarget.value)}
+                onKeyUp={(ev) => handleOnKeyUp(ev)}
                 maxLength={inputMaxLength}
             ></input>
         )

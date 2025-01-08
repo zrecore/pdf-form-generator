@@ -124,7 +124,7 @@ describe(
           code: 'Enter'
         })
         
-        expect(value).toBe("Test")
+        expect(value).toBe(dom)
       }
     )
   }
