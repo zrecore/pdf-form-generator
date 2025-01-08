@@ -39,5 +39,13 @@ describe(
 
       }
     )
+
+    it(
+      'Renders correctly',
+      () => {
+        const { container } = render(<PhotoButton />)
+        expect(container).toMatchSnapshot()
+      }
+    )
   }
 )

@@ -201,5 +201,67 @@ describe(
                 expect(dom).toHaveClass('hidden')
             }
         )
+
+        it(
+            'Renders correctly, NO tasks, YES Add button',
+            () => {
+                let tasks:Array<Task> = []
+                const { container } = render(<TaskList tasks={tasks} hasAddButton={true} />)
+                expect(container).toMatchSnapshot()
+            }
+        )
+
+        it(
+            'Renders correctly, NO tasks, NO Add button',
+            () => {
+                let tasks:Array<Task> = []
+                const { container } = render(<TaskList tasks={tasks} hasAddButton={false} />)
+                expect(container).toMatchSnapshot()
+            }
+        )
+
+        it(
+            'Renders correctly, YES tasks, YES Add button',
+            () => {
+                let tasks:Array<Task> = [
+                    {
+                        id: 1,
+                        title: 'Test 1',
+                        description: 'Description of Test 1',
+                        isComplete: false
+                    } as Task,
+                    {
+                        id: 2,
+                        title: 'Test 2',
+                        description: 'Description of Test 2',
+                        isComplete: false
+                    } as Task
+                ]
+                const { container } = render(<TaskList tasks={tasks} hasAddButton={true} />)
+                expect(container).toMatchSnapshot()
+            }
+        )
+
+        it(
+            'Renders correctly, YES tasks, NO Add button',
+            () => {
+                let tasks:Array<Task> = [
+                    {
+                        id: 1,
+                        title: 'Test 1',
+                        description: 'Description of Test 1',
+                        isComplete: false
+                    } as Task,
+                    {
+                        id: 2,
+                        title: 'Test 2',
+                        description: 'Description of Test 2',
+                        isComplete: false
+                    } as Task
+                ]
+                const { container } = render(<TaskList tasks={tasks} hasAddButton={false} />)
+                expect(container).toMatchSnapshot()
+            }
+        )
     }
 )

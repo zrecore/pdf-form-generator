@@ -39,5 +39,13 @@ describe(
 
       }
     )
+
+    it(
+          'Renders correctly',
+          () => {
+            const { container } = render(<RemoveButton />)
+            expect(container).toMatchSnapshot()
+          }
+        )
   }
 )

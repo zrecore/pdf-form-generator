@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/editableInput Renders correctly, is NOT editable. 1`] = `
+<div>
+  <input
+    class="p-1 editable-input static-mode  print:p-0"
+    data-testid="test-input"
+    id=":ra:"
+    maxlength="15"
+    tabindex="0"
+    value="Test"
+  />
+</div>
+`;
+
+exports[`components/editableInput Renders correctly, is editable. 1`] = `
+<div>
+  <input
+    class="p-1 editable-input edit-mode  print:p-0"
+    data-testid="test-input"
+    id=":r9:"
+    maxlength="15"
+    tabindex="0"
+    value="Test"
+  />
+</div>
+`;

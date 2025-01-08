@@ -39,5 +39,13 @@ describe(
         expect(clickValue).toBe(1)
       }
     )
+
+    it(
+      'Renders correctly',
+      () => {
+        const { container } = render(<AddButton />)
+        expect(container).toMatchSnapshot()
+      }
+    )
   }
 )

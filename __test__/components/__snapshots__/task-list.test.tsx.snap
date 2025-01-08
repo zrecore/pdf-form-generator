@@ -1,0 +1,337 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/taskList Renders correctly, NO tasks, NO Add button 1`] = `
+<div>
+  <ul
+    class="task-list m-0 p-0"
+    data-testid="task-list"
+  >
+    <li
+      class="m-0 p-0 hidden"
+    >
+      <button
+        aria-label="Add Task Button"
+        class=" rounded-md border-solid border-2 p-1 w-full bg-transparent text-cyan-700 hover:text-cyan-400 border-cyan-700 hover:border-cyan-400 print:hidden"
+        data-testid="add-button"
+        tabindex="0"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4 mr-1 inline"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 4.5v15m7.5-7.5h-15"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Add Task
+      </button>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`components/taskList Renders correctly, NO tasks, YES Add button 1`] = `
+<div>
+  <ul
+    class="task-list m-0 p-0"
+    data-testid="task-list"
+  >
+    <li
+      class="m-0 p-0 "
+    >
+      <button
+        aria-label="Add Task Button"
+        class=" rounded-md border-solid border-2 p-1 w-full bg-transparent text-cyan-700 hover:text-cyan-400 border-cyan-700 hover:border-cyan-400 print:hidden"
+        data-testid="add-button"
+        tabindex="0"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4 mr-1 inline"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 4.5v15m7.5-7.5h-15"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Add Task
+      </button>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`components/taskList Renders correctly, YES tasks, NO Add button 1`] = `
+<div>
+  <ul
+    class="task-list m-0 p-0"
+    data-testid="task-list"
+  >
+    <li
+      class="task-item flex flex-row hover:bg-cyan-300 m-0 p-0"
+    >
+      <label
+        class="flex items-center p-0 m-0 mb-1 cursor-pointer text-lg/[0.2in] select-none"
+      >
+        <input
+          class="hidden opacity-0 cursor-pointer h-[0.2in] w-[0.2in] peer checked:bg-white checked:text-black"
+          tabindex="0"
+          type="checkbox"
+        />
+        <div
+          class=" pl-[0.025in] w-[0.2in] h-[0.2in] bg-gray-200 peer-checked:bg-white peer-checked:text-black after:content-none peer-checked:after:content-['✓'] hover:bg-gray-400 border border-1 border-solid border-gray-800 rounded-sm"
+        />
+      </label>
+      <input
+        class="p-1 editable-input static-mode rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid text-nowrap text-sm/[0.125in] print:p-0"
+        data-testid="test-input"
+        id="task-1"
+        maxlength="15"
+        tabindex="1"
+        value="Test 1"
+      />
+      <button
+        class="ml-0 text-gray-200 hover:text-red-700 print:hidden m-1"
+        data-testid="remove-button"
+        tabindex="0"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </li>
+    <li
+      class="task-item flex flex-row hover:bg-cyan-300 m-0 p-0"
+    >
+      <label
+        class="flex items-center p-0 m-0 mb-1 cursor-pointer text-lg/[0.2in] select-none"
+      >
+        <input
+          class="hidden opacity-0 cursor-pointer h-[0.2in] w-[0.2in] peer checked:bg-white checked:text-black"
+          tabindex="0"
+          type="checkbox"
+        />
+        <div
+          class=" pl-[0.025in] w-[0.2in] h-[0.2in] bg-gray-200 peer-checked:bg-white peer-checked:text-black after:content-none peer-checked:after:content-['✓'] hover:bg-gray-400 border border-1 border-solid border-gray-800 rounded-sm"
+        />
+      </label>
+      <input
+        class="p-1 editable-input static-mode rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid text-nowrap text-sm/[0.125in] print:p-0"
+        data-testid="test-input"
+        id="task-2"
+        maxlength="15"
+        tabindex="2"
+        value="Test 2"
+      />
+      <button
+        class="ml-0 text-gray-200 hover:text-red-700 print:hidden m-1"
+        data-testid="remove-button"
+        tabindex="0"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </li>
+    <li
+      class="m-0 p-0 hidden"
+    >
+      <button
+        aria-label="Add Task Button"
+        class=" rounded-md border-solid border-2 p-1 w-full bg-transparent text-cyan-700 hover:text-cyan-400 border-cyan-700 hover:border-cyan-400 print:hidden"
+        data-testid="add-button"
+        tabindex="0"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4 mr-1 inline"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 4.5v15m7.5-7.5h-15"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Add Task
+      </button>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`components/taskList Renders correctly, YES tasks, YES Add button 1`] = `
+<div>
+  <ul
+    class="task-list m-0 p-0"
+    data-testid="task-list"
+  >
+    <li
+      class="task-item flex flex-row hover:bg-cyan-300 m-0 p-0"
+    >
+      <label
+        class="flex items-center p-0 m-0 mb-1 cursor-pointer text-lg/[0.2in] select-none"
+      >
+        <input
+          class="hidden opacity-0 cursor-pointer h-[0.2in] w-[0.2in] peer checked:bg-white checked:text-black"
+          tabindex="0"
+          type="checkbox"
+        />
+        <div
+          class=" pl-[0.025in] w-[0.2in] h-[0.2in] bg-gray-200 peer-checked:bg-white peer-checked:text-black after:content-none peer-checked:after:content-['✓'] hover:bg-gray-400 border border-1 border-solid border-gray-800 rounded-sm"
+        />
+      </label>
+      <input
+        class="p-1 editable-input static-mode rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid text-nowrap text-sm/[0.125in] print:p-0"
+        data-testid="test-input"
+        id="task-1"
+        maxlength="15"
+        tabindex="1"
+        value="Test 1"
+      />
+      <button
+        class="ml-0 text-gray-200 hover:text-red-700 print:hidden m-1"
+        data-testid="remove-button"
+        tabindex="0"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </li>
+    <li
+      class="task-item flex flex-row hover:bg-cyan-300 m-0 p-0"
+    >
+      <label
+        class="flex items-center p-0 m-0 mb-1 cursor-pointer text-lg/[0.2in] select-none"
+      >
+        <input
+          class="hidden opacity-0 cursor-pointer h-[0.2in] w-[0.2in] peer checked:bg-white checked:text-black"
+          tabindex="0"
+          type="checkbox"
+        />
+        <div
+          class=" pl-[0.025in] w-[0.2in] h-[0.2in] bg-gray-200 peer-checked:bg-white peer-checked:text-black after:content-none peer-checked:after:content-['✓'] hover:bg-gray-400 border border-1 border-solid border-gray-800 rounded-sm"
+        />
+      </label>
+      <input
+        class="p-1 editable-input static-mode rounded-sm m-1 hover:border-white hover:border-1 hover:border-solid text-nowrap text-sm/[0.125in] print:p-0"
+        data-testid="test-input"
+        id="task-2"
+        maxlength="15"
+        tabindex="2"
+        value="Test 2"
+      />
+      <button
+        class="ml-0 text-gray-200 hover:text-red-700 print:hidden m-1"
+        data-testid="remove-button"
+        tabindex="0"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </li>
+    <li
+      class="m-0 p-0 "
+    >
+      <button
+        aria-label="Add Task Button"
+        class=" rounded-md border-solid border-2 p-1 w-full bg-transparent text-cyan-700 hover:text-cyan-400 border-cyan-700 hover:border-cyan-400 print:hidden"
+        data-testid="add-button"
+        tabindex="0"
+      >
+        <svg
+          aria-hidden="true"
+          class="size-4 mr-1 inline"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 4.5v15m7.5-7.5h-15"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Add Task
+      </button>
+    </li>
+  </ul>
+</div>
+`;

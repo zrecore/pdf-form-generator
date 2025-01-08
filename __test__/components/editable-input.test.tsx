@@ -147,5 +147,21 @@ describe(
         expect(dom).not.toHaveClass('edit-mode')
       }
     )
+
+    it(
+      'Renders correctly, is editable.',
+      () => {
+        const { container } = render(<EditableInput isEditable={true} value="Test" />)
+        expect(container).toMatchSnapshot()
+      }
+    )
+
+    it(
+      'Renders correctly, is NOT editable.',
+      () => {
+        const { container } = render(<EditableInput isEditable={false} value="Test" />)
+        expect(container).toMatchSnapshot()
+      }
+    )
   }
 )
